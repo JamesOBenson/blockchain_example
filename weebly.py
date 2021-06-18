@@ -43,7 +43,7 @@ else:
     print("Getting ropsten token, you can do this only once per day.")
     os.system(f"wget https://faucet.ropsten.be/donate/{sender_account.address}")
 
-#================ BUILD CONTRACT ================
+# ================ BUILD CONTRACT ================
 company_shares = 100000
 company_shares_price = 1
 
@@ -70,17 +70,17 @@ print(f"NEW CONTRACT ADDRESS: {tx_receipt.contractAddress}")
 time_to_wait = 240
 print(f"It may take a few minutes to create your contract, sleeping for {time_to_wait} seconds.")
 time.sleep(time_to_wait)
-#=========================
+# =========================
 amount_to_buy = 20
 
 contract_addr = tx_receipt.contractAddress
-#contract_addr="0x39898B49021fa1d7847D8C507fe3a750f5DcDfba"
+# contract_addr="0x39898B49021fa1d7847D8C507fe3a750f5DcDfba"
 contract_instance = w3.eth.contract(address=contract_addr, abi=abi)
 
 print(f"Sender Account: {sender_account.address}")
-#print(f"Sender Account Private Key: {sender_account.privateKey}")
+# print(f"Sender Account Private Key: {sender_account.privateKey}")
 print(f"Receiver Account: {receiver_account.address}")
-#print(f"Receiver Account Private Key: {receiver_account.privateKey}")
+# print(f"Receiver Account Private Key: {receiver_account.privateKey}")
 print(f"Contract Address: {contract_addr}")
 contract_owner = sender_account.address
 contract_owner_private = sender_account.privateKey
@@ -96,9 +96,9 @@ print(f"Get holding for receiver_account address:")
 print(contract_instance.functions.getHolding(receiver_account.address).call())
 
 
-print(f"\n{receiver_account.address} is transfering {amount_to_buy} shares of stock.\n")
+print(f"\n{receiver_account.address} is transferring {amount_to_buy} shares of stock.\n")
 # Functions: payBill, sellStock, buyStock, transferStock
-transaction = contract_instance.functions.transferStock(receiver_account.address, amount_to_buy).buildTransaction({'chainId': 3, 'gas':75000, 'nonce': w3.eth.getTransactionCount(sender_account.address)})
+transaction = contract_instance.functions.transferStock(receiver_account.address, amount_to_buy).buildTransaction({'chainId': 3, 'gas': 75000, 'nonce': w3.eth.getTransactionCount(sender_account.address)})
 signed_txn = w3.eth.account.signTransaction(transaction, sender_account.privateKey)
 txn_hash = w3.eth.sendRawTransaction(signed_txn.rawTransaction)
 tx_receipt = w3.eth.waitForTransactionReceipt(txn_hash)
